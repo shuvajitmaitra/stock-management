@@ -5,7 +5,6 @@ import { formatDate } from "../constant/commonFunction";
 
 export default function Dashboard() {
   const { products, addProductVisible, setAddProductVisible, sTUVisible, setSTUVisible } = useStock();
-  // console.log("products", JSON.stringify(products, null, 2));
   const productOptions = products.map((item) => ({
     label: item.name,
     value: item._id,

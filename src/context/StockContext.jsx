@@ -45,13 +45,47 @@ export const StockProvider = ({ children }) => {
         console.log({ error: err });
       });
   };
+  const handleDeleteHistory = (stock) => {
+    axiosInstance
+      .delete(`/history/delete/${stock._id}`)
+      .then((res) => {
+        const itemIndex = products.findIndex((item) => item._id === stock.productId);
+
+        if (res.data.success) {
+          if (itemIndex === -1) return; // Handle case where product is not found in `products` array.
+
+          // Update the products array
+          setProducts((prevProducts) => {
+            const updatedProducts = [...prevProducts];
+            updatedProducts[itemIndex] = {
+              ...updatedProducts[itemIndex],
+              stockQuantity:
+                stock.type === "in"
+                  ? updatedProducts[itemIndex].stockQuantity - stock.stockQuantity
+                  : updatedProducts[itemIndex].stockQuantity + stock.stockQuantity,
+            };
+            return updatedProducts;
+          });
+
+          if (stock.type === "in") {
+            setStockIn((prevStockIn) => prevStockIn.filter((item) => item._id !== stock._id));
+          } else {
+            setStockOut((prevStockOut) => prevStockOut.filter((item) => item._id !== stock._id));
+          }
+        }
+      })
+      .catch((err) => {
+        console.log("err", JSON.stringify(err, null, 2));
+      });
+  };
 
   const getProducts = () => {
     axiosInstance
       .get("/products")
       .then((res) => {
+        console.log("res.data", JSON.stringify(res.data, null, 2));
         if (res.data.success) {
-          setProducts(res.data.products.reverse());
+          setProducts(res.data.products);
         }
       })
       .catch((error) => {
@@ -95,6 +129,7 @@ export const StockProvider = ({ children }) => {
         handleStockUpdate,
         setSTUVisible,
         sTUVisible,
+        handleDeleteHistory,
       }}
     >
       {children}

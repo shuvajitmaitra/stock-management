@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStock } from "../context/StockContext";
 import Modal from "../components/Modal";
+import { formatDate } from "../constant/commonFunction";
 
 export default function StockOut() {
   const { stockOut, editStock, deleteStock } = useStock();
@@ -27,10 +28,10 @@ export default function StockOut() {
         </thead>
         <tbody>
           {stockOut.map((stock) => (
-            <tr key={stock.id}>
-              <td className="border p-2">{stock.product}</td>
-              <td className="border p-2">{stock.quantity}</td>
-              <td className="border p-2">{stock.date}</td>
+            <tr key={stock._id}>
+              <td className="border p-2">{stock.name}</td>
+              <td className="border p-2">{stock.stockQuantity}</td>
+              <td className="border p-2">{formatDate(stock.date)}</td>
               <td className="border p-2">
                 <button
                   onClick={() => {
@@ -41,7 +42,7 @@ export default function StockOut() {
                 >
                   Edit
                 </button>
-                <button onClick={() => deleteStock(stock.id, "out")} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
+                <button onClick={() => deleteStock(stock._id, "out")} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
                   Delete
                 </button>
               </td>

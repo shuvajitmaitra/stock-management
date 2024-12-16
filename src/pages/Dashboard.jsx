@@ -14,8 +14,6 @@ export default function Dashboard() {
     value: item._id,
   }));
 
-  console.log(sTUVisible);
-
   const handleImageClick = (imageUrl) => {
     setPreviewImage(imageUrl);
   };
@@ -46,8 +44,6 @@ export default function Dashboard() {
 
       {sTUVisible && <Modal defaultValues={productOptions[0]} productOptions={productOptions} />}
       {addProductVisible && <AddProductsModal />}
-
-      {/* Image Preview Modal */}
       {previewImage && <ImagePreviewModal previewImage={previewImage} setPreviewImage={setPreviewImage} />}
 
       <table className="w-full border">

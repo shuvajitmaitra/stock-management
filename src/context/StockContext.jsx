@@ -37,7 +37,7 @@ export const StockProvider = ({ children }) => {
   };
 
   const handleAddProduct = (e) => {
-    console.log(e);
+    // console.log(e);
     // e.preventDefault();
     // const form = e.target;
     // const formData = new FormData(form);
@@ -63,7 +63,6 @@ export const StockProvider = ({ children }) => {
   };
 
   const handleStockUpdate = (product) => {
-    console.log("product", JSON.stringify(product, null, 2));
     axiosInstance
       .patch(`/product/update/${product._id}`, { ...product, date: new Date() })
       .then((res) => {
@@ -131,7 +130,6 @@ export const StockProvider = ({ children }) => {
   };
 
   const handleSearchProduct = (text) => {
-    console.log(text);
     const result = allProducts.filter((c) => c?.name?.toLowerCase().includes(text?.toLowerCase()));
     setProducts(result);
   };
@@ -149,7 +147,20 @@ export const StockProvider = ({ children }) => {
         console.log({ error });
       });
   };
-
+  const handleDeleteProduct = (id) => {
+    axiosInstance
+      .delete(`/product/delete/${id}`)
+      .then((res) => {
+        console.log("res.data", JSON.stringify(res.data, null, 2));
+        if (res.data.success) {
+          getProducts();
+          getHistories();
+        }
+      })
+      .catch((err) => {
+        console.log("err to delete product", JSON.stringify(err, null, 2));
+      });
+  };
   useEffect(() => {
     getProducts();
     getHistories();
@@ -164,6 +175,7 @@ export const StockProvider = ({ children }) => {
   return (
     <StockContext.Provider
       value={{
+        handleDeleteProduct,
         user,
         handleUserLogin,
         addProductVisible,

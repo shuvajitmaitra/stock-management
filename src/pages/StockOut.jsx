@@ -24,7 +24,11 @@ export default function StockOut() {
               <td className=" text-center border text-white border-gray-600 p-2">{formatDate(stock.date)}</td>
               {user.role === "admin" && (
                 <td className=" text-center border text-white border-gray-600 p-2">
-                  <button onClick={() => handleDeleteHistory(stock)} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
+                  <button
+                    disabled={!stock.productId}
+                    onClick={() => handleDeleteHistory(stock)}
+                    className={`px-4 py-1 ${!stock.productId ? "bg-red-900 text-red-500 " : " bg-red-500"} text-white rounded mx-1`}
+                  >
                     Delete
                   </button>
                 </td>

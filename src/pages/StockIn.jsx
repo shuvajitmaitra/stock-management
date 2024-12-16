@@ -3,7 +3,6 @@ import { formatDate } from "../constant/commonFunction";
 
 export default function StockIn() {
   const { stockIn, handleDeleteHistory, user } = useStock();
-  console.log("stockIn", JSON.stringify(stockIn, null, 2));
 
   return (
     <div className="container mx-auto p-4 min-h-100vh bg-gray-700">
@@ -25,7 +24,11 @@ export default function StockIn() {
               <td className=" text-center border-gray-600 text-white border p-2">{formatDate(stock.date)}</td>
               {user.role === "admin" && (
                 <td className=" text-center border-gray-600 text-white border p-2">
-                  <button onClick={() => handleDeleteHistory(stock)} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
+                  <button
+                    disabled={!stock.productId}
+                    onClick={() => handleDeleteHistory(stock)}
+                    className={`px-4 py-1 ${!stock.productId ? "bg-red-700" : " bg-red-500"} text-white rounded mx-1`}
+                  >
                     Delete
                   </button>
                 </td>

@@ -5,7 +5,6 @@ import axios from "axios"; // You'll need axios or another HTTP client to send d
 export default function AddProductsModal() {
   const [formData, setFormData] = useState({ name: "", stockQuantity: "", image: "" });
   const { setAddProductVisible, handleAddProduct } = useStock();
-  const [loading, setLoading] = useState(false);
 
   const [uploading, setUploading] = useState(false);
 
@@ -102,9 +101,8 @@ export default function AddProductsModal() {
               onClick={() => handleAddProduct(formData)}
               type="submit"
               className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-              disabled={loading}
             >
-              {loading ? "Submitting..." : "Submit"}
+              {"Submit"}
             </button>
             <button
               type="button"

@@ -120,7 +120,7 @@ export default function Modal() {
               name="stockQuantity"
               value={formData.stockQuantity || ""}
               placeholder="Quantity"
-              className="border p-2 w-full rounded bg-gray-700 border-gray-600"
+              className="border text-gray-300 p-2 w-full rounded bg-gray-700 border-gray-600"
               onChange={handleChange}
               required
             />

@@ -9,9 +9,9 @@ const LoginPage = () => {
   const { handleUserLogin } = useStock();
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-teal-500">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96 transform transition-all duration-300 ease-in-out hover:scale-105">
-        <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">Login</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-800 to-teal-500">
+      <div className="bg-gray-700 p-8 rounded-lg shadow-lg w-96 transform transition-all duration-300 ease-in-out hover:scale-105">
+        <h2 className="text-3xl font-bold text-center text-gray-300 mb-6">Login</h2>
         <form onSubmit={handleUserLogin} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700" htmlFor="email">
@@ -21,10 +21,10 @@ const LoginPage = () => {
               type="email"
               id="email"
               name="email"
-              className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+              className="w-full p-3 mt-2 bg-gray-600 text-gray-300 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
+              placeholder="Write you email..."
               required
             />
           </div>
@@ -38,7 +38,7 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
-                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+                className="w-full p-3 mt-2 bg-gray-600 text-gray-300 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="********"
@@ -46,7 +46,7 @@ const LoginPage = () => {
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                className="absolute right-3 top-8 transform -translate-y-1/2 text-gray-500"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "Hide" : "Show"}

@@ -118,7 +118,7 @@ export const StockProvider = ({ children }) => {
     axiosInstance
       .get("/products")
       .then((res) => {
-        console.log("res.data", JSON.stringify(res.data, null, 2));
+        // console.log("res.data", JSON.stringify(res.data, null, 2));
         if (res.data.success) {
           setProducts(res.data.products);
           setAllProducts(res.data.products);
@@ -151,7 +151,7 @@ export const StockProvider = ({ children }) => {
     axiosInstance
       .delete(`/product/delete/${id}`)
       .then((res) => {
-        console.log("res.data", JSON.stringify(res.data, null, 2));
+        // console.log("res.data", JSON.stringify(res.data, null, 2));
         if (res.data.success) {
           getProducts();
           getHistories();
@@ -160,6 +160,12 @@ export const StockProvider = ({ children }) => {
       .catch((err) => {
         console.log("err to delete product", JSON.stringify(err, null, 2));
       });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("isAuthenticated");
+    window.location.reload();
   };
   useEffect(() => {
     getProducts();
@@ -175,6 +181,7 @@ export const StockProvider = ({ children }) => {
   return (
     <StockContext.Provider
       value={{
+        handleLogout,
         handleDeleteProduct,
         user,
         handleUserLogin,

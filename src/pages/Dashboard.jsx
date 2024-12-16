@@ -5,10 +5,14 @@ import AddProductsModal from "../components/AddProductsModal";
 import { formatDate } from "../constant/commonFunction";
 import SearchField from "../components/SearchField";
 import ImagePreviewModal from "../components/ImagePreviewModal";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 
 export default function Dashboard() {
   const { products, addProductVisible, setAddProductVisible, sTUVisible, setSTUVisible, user, handleDeleteProduct } = useStock();
+
   const [previewImage, setPreviewImage] = useState(null); // To handle image preview modal visibility
+  const [confirmDelete, setConfirmDelete] = useState(null);
+
   const productOptions = products.map((item) => ({
     label: item.name,
     value: item._id,
@@ -19,74 +23,88 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-gray-700">
+    <div className="container mx-auto p-4 bg-gray-700 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 text-white">Dashboard</h1>
 
-      <div className="flex gap-4 mb-4">
-        <button
-          onClick={() => {
-            setAddProductVisible(true);
-          }}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Add Product
-        </button>
-        <button
-          onClick={() => {
-            setSTUVisible(true);
-          }}
-          className="px-4 py-2 bg-green-500 text-white rounded"
-        >
-          Stock Update
-        </button>
-        <SearchField />
+      {/* Action Buttons and Search Field */}
+      <div className="flex flex-col md:flex-row gap-4 mb-6 items-start md:items-center">
+        <div className="flex flex-col sm:flex-row gap-4 w-full">
+          <button
+            onClick={() => {
+              setAddProductVisible(true);
+            }}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          >
+            Add Product
+          </button>
+          <button
+            onClick={() => {
+              setSTUVisible(true);
+            }}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+          >
+            Stock Update
+          </button>
+        </div>
+        <div className="mt-4 md:mt-0 w-full sm:w-auto">
+          <SearchField />
+        </div>
       </div>
 
-      {sTUVisible && <Modal defaultValues={productOptions[0]} productOptions={productOptions} />}
+      {/* Modals */}
+      {sTUVisible && <Modal defaultValues={productOptions[0]} productOptions={productOptions} onClose={() => setSTUVisible(false)} />}
       {addProductVisible && <AddProductsModal />}
       {previewImage && <ImagePreviewModal previewImage={previewImage} setPreviewImage={setPreviewImage} />}
+      {confirmDelete && <ConfirmDeleteModal onClick={() => handleDeleteProduct(confirmDelete)} onCancel={() => setConfirmDelete(null)} />}
 
-      <table className="w-full border">
-        <thead>
-          <tr className="bg-gray-600">
-            <th className="text-center text-white border border-gray-600 p-2">Serial</th>
-            <th className="text-center text-white border border-gray-600 p-2">Product Name</th>
-            <th className="text-center text-white border border-gray-600 p-2">Product Image</th>
-            <th className="text-center text-white border border-gray-600 p-2">Quantity</th>
-            <th className="text-center text-white border border-gray-600 p-2">Last Update</th>
-            {user.role === "admin" && <th className="text-center text-white border border-gray-600 p-2">Action</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((item, index) => (
-            <tr key={index}>
-              <td className="text-center border border-gray-600 text-white p-2">{index + 1}</td>
-              <td className="border border-gray-600 text-white p-2">{item.name || item.product}</td>
-              <td className="border border-gray-600 text-white p-1 flex justify-center items-center">
-                {
-                  <img
-                    className="max-w-[150px] h-10 rounded-lg object-cover cursor-pointer"
-                    src={item.image || "https://pulsetechbd.com/uploads/sitesetting/pulse-(1).png"}
-                    alt={item.name || item.product}
-                    onClick={() => handleImageClick(item.image || "https://pulsetechbd.com/uploads/sitesetting/pulse-(1).png")} // Handle click event
-                  />
-                }
-              </td>
-              <td className={`text-center border border-gray-600 text-white p-2 ${!item.stockQuantity && "text-red-500"}`}>
-                {item.stockQuantity || item.quantity || "0"}
-              </td>
-              <td className="text-center border border-gray-600 text-white p-2">{formatDate(item.date)}</td>
-              {user.role === "admin" && (
-                <td className=" text-center border-gray-600 text-white border p-2">
-                  <button onClick={() => handleDeleteProduct(item._id)} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
-                    Delete
-                  </button>
-                </td>
-              )}
+      {/* Responsive Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full rounded-lg overflow-hidden">
+          <thead>
+            <tr className="bg-gray-600">
+              <th className="text-center text-white border border-gray-600 p-2 text-sm">Serial</th>
+              <th className="text-center text-white border border-gray-600 p-2 text-sm">Product Name</th>
+              <th className="text-center text-white border border-gray-600 p-2 text-sm">Product Image</th>
+              <th className="text-center text-white border border-gray-600 p-2 text-sm">Quantity</th>
+              <th className="text-center text-white border border-gray-600 p-2 text-sm">Last Update</th>
+              {user.role === "admin" && <th className="text-center text-white border border-gray-600 p-2 text-sm">Action</th>}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {products.map((item, index) => (
+              <tr key={item._id} className="hover:bg-gray-700 transition-colors">
+                <td className="text-center border border-gray-600 text-white p-2 text-sm">{index + 1}</td>
+                <td className="border border-gray-600 text-white p-2 text-sm">{item.name || item.product}</td>
+                <td className="border border-gray-600 text-white p-2 text-sm">
+                  {/* Flex container to center the image */}
+                  <div className="flex justify-center items-center h-full">
+                    <img
+                      className="w-16 h-10 rounded-lg object-cover cursor-pointer"
+                      src={item.image || "https://pulsetechbd.com/uploads/sitesetting/pulse-(1).png"}
+                      alt={item.name || item.product}
+                      onClick={() => handleImageClick(item.image || "https://pulsetechbd.com/uploads/sitesetting/pulse-(1).png")}
+                    />
+                  </div>
+                </td>
+                <td className={`text-center border border-gray-600 text-white p-2 text-sm ${!item.stockQuantity && "text-red-500"}`}>
+                  {item.stockQuantity || item.quantity || "0"}
+                </td>
+                <td className="text-center border border-gray-600 text-white p-2 text-sm">{formatDate(item.date)}</td>
+                {user.role === "admin" && (
+                  <td className="text-center border border-gray-600 text-white p-2 text-sm">
+                    <button
+                      onClick={() => setConfirmDelete(item._id)}
+                      className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

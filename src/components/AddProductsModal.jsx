@@ -55,7 +55,7 @@ export default function AddProductsModal() {
               name="name"
               value={formData.name}
               placeholder="Product Name"
-              className="w-full bg-gray-700 p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full text-gray-300 bg-gray-700 p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               onChange={handleChange}
               required
             />
@@ -67,7 +67,7 @@ export default function AddProductsModal() {
               name="stockQuantity"
               value={formData.stockQuantity}
               placeholder="Quantity"
-              className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full text-gray-300 p-3 bg-gray-700 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               onChange={(e) => setFormData((prev) => ({ ...prev, stockQuantity: parseInt(e.target.value) }))}
               required
             />

@@ -47,8 +47,8 @@ export default function AddProductsModal() {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-      <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Add Your Product</h2>
+      <div className="bg-gray-800 p-6 rounded-xl shadow-lg max-w-md w-full">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">Add Your Product</h2>
         <form className="space-y-4">
           <div>
             <input
@@ -56,7 +56,7 @@ export default function AddProductsModal() {
               name="name"
               value={formData.name}
               placeholder="Product Name"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full bg-gray-700 p-3 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               onChange={handleChange}
               required
             />
@@ -68,30 +68,33 @@ export default function AddProductsModal() {
               name="stockQuantity"
               value={formData.stockQuantity}
               placeholder="Quantity"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               onChange={(e) => setFormData((prev) => ({ ...prev, stockQuantity: parseInt(e.target.value) }))}
               required
             />
           </div>
-          {uploading && (
+          {uploading ? (
             <div className="w-10 h-10 flex gap-2 items-center justify-center">
               <div className="w-2 h-5 animate-[ping_1.4s_linear_infinite] bg-sky-600"></div>
               <div className="w-2 h-5 animate-[ping_1.8s_linear_infinite] bg-sky-600"></div>
               <div className="w-2 h-5 animate-[ping_2s_linear_infinite] bg-sky-600"></div>
             </div>
-          )}
-          {!uploading && formData.image ? (
-            <img className="w-full max-w-[150px] rounded-lg object-cover" src={formData.image} alt={formData?.image} />
           ) : (
-            <div>
-              <label htmlFor="type2-2" className="flex w-full max-w-[380px] md:w-[380px]">
-                <div className="w-fit whitespace-nowrap bg-amber-500 px-3 py-2 text-white">Choose File</div>
-                <div className="flex w-full max-w-[380px] items-center border-b-[2px] border-amber-500 px-2 font-medium text-gray-400">
-                  {formData.image ? formData.image : "No File Chosen"}
+            <>
+              {formData.image ? (
+                <img className="w-full max-w-[150px] rounded-lg object-cover" src={formData.image} alt={formData?.image} />
+              ) : (
+                <div>
+                  <label htmlFor="type2-2" className="flex w-full max-w-[380px] md:w-[380px]">
+                    <div className="w-fit whitespace-nowrap bg-gray-700 px-3 py-2 text-white">Choose File</div>
+                    <div className="flex w-full max-w-[380px] items-center border-b-[2px] border-gray-600 px-2 font-medium text-gray-400">
+                      {formData.image ? formData.image : "No File Chosen"}
+                    </div>
+                  </label>
+                  <input onChange={handleImageUpload} value={formData.image} className="hidden" type="file" name="" id="type2-2" />
                 </div>
-              </label>
-              <input onChange={handleImageUpload} value={formData.image} className="hidden" type="file" name="" id="type2-2" />
-            </div>
+              )}
+            </>
           )}
 
           <div className="flex justify-between items-center">

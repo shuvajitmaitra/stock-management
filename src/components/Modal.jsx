@@ -34,13 +34,46 @@ export default function Modal() {
 
   const selectedProduct = productOptions.find((option) => option.value === formData._id);
 
+  // Define custom styles
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#4B5563" : "#374151", // Example colors
+      borderColor: state.isFocused ? "#3B82F6" : "#6B7280",
+      boxShadow: state.isFocused ? "0 0 0 1px #3B82F6" : "none",
+      "&:hover": {
+        borderColor: "#3B82F6",
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#374151",
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? "#3B82F6" : state.isFocused ? "#4B5563" : "#374151",
+      color: "#FFFFFF",
+      "&:hover": {
+        backgroundColor: "#4B5563",
+      },
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#FFFFFF",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "#9CA3AF",
+    }),
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded w-96">
-        <h2 className="text-lg font-bold mb-4">{"Stock Update"}</h2>
+      <div className="bg-gray-800 p-6 rounded w-96">
+        <h2 className="text-lg font-bold mb-4 text-white">{"Stock Update"}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-500 mb-1">
               Product Name
             </label>
             <Select
@@ -57,12 +90,13 @@ export default function Modal() {
               }
               options={productOptions}
               isSearchable
-              placeholder="Select or type product name" // Ensure placeholder is visible when no selection
+              placeholder="Select or type product name"
+              styles={customStyles} // Apply custom styles
             />
           </div>
 
           <div className="mb-2">
-            <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="type" className="block text-sm font-medium text-gray-500 mb-1">
               Select stock in or stock out
             </label>
             <Select
@@ -73,19 +107,20 @@ export default function Modal() {
               options={typeOptions}
               isSearchable
               placeholder="Select stock in or stock out"
+              styles={customStyles} // Apply custom styles
             />
           </div>
 
           <div className="mb-2">
-            <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="quantity" className="block text-sm font-medium text-gray-500 mb-1">
               Quantity
             </label>
             <input
               type="number"
               name="stockQuantity"
-              value={formData.stockQuantity}
+              value={formData.stockQuantity || ""}
               placeholder="Quantity"
-              className="border p-2 w-full"
+              className="border p-2 w-full rounded bg-gray-700 border-gray-600"
               onChange={handleChange}
               required
             />

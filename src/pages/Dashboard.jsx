@@ -7,7 +7,7 @@ import SearchField from "../components/SearchField";
 import ImagePreviewModal from "../components/ImagePreviewModal";
 
 export default function Dashboard() {
-  const { products, addProductVisible, setAddProductVisible, sTUVisible, setSTUVisible } = useStock();
+  const { products, addProductVisible, setAddProductVisible, sTUVisible, setSTUVisible, user, handleDeleteProduct } = useStock();
   const [previewImage, setPreviewImage] = useState(null); // To handle image preview modal visibility
   const productOptions = products.map((item) => ({
     label: item.name,
@@ -17,16 +17,12 @@ export default function Dashboard() {
   console.log(sTUVisible);
 
   const handleImageClick = (imageUrl) => {
-    setPreviewImage(imageUrl); // Set the image URL to show in the modal
-  };
-
-  const closeImagePreview = () => {
-    setPreviewImage(null); // Close the image preview modal
+    setPreviewImage(imageUrl);
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+    <div className="container mx-auto p-4 bg-gray-700">
+      <h1 className="text-2xl font-bold mb-4 text-white">Dashboard</h1>
 
       <div className="flex gap-4 mb-4">
         <button
@@ -56,20 +52,21 @@ export default function Dashboard() {
 
       <table className="w-full border">
         <thead>
-          <tr className="bg-gray-100">
-            <th className="text-center border p-2">Serial</th>
-            <th className="text-center border p-2">Product Name</th>
-            <th className="text-center border p-2">Product Image</th>
-            <th className="text-center border p-2">Quantity</th>
-            <th className="text-center border p-2">Last Update</th>
+          <tr className="bg-gray-600">
+            <th className="text-center text-white border border-gray-600 p-2">Serial</th>
+            <th className="text-center text-white border border-gray-600 p-2">Product Name</th>
+            <th className="text-center text-white border border-gray-600 p-2">Product Image</th>
+            <th className="text-center text-white border border-gray-600 p-2">Quantity</th>
+            <th className="text-center text-white border border-gray-600 p-2">Last Update</th>
+            {user.role === "admin" && <th className="text-center text-white border border-gray-600 p-2">Action</th>}
           </tr>
         </thead>
         <tbody>
           {products.map((item, index) => (
             <tr key={index}>
-              <td className="text-center border p-2">{index + 1}</td>
-              <td className="border p-2">{item.name || item.product}</td>
-              <td className="border p-1 flex justify-center items-center">
+              <td className="text-center border border-gray-600 text-white p-2">{index + 1}</td>
+              <td className="border border-gray-600 text-white p-2">{item.name || item.product}</td>
+              <td className="border border-gray-600 text-white p-1 flex justify-center items-center">
                 {
                   <img
                     className="max-w-[150px] h-10 rounded-lg object-cover cursor-pointer"
@@ -79,8 +76,17 @@ export default function Dashboard() {
                   />
                 }
               </td>
-              <td className="text-center border p-2">{item.stockQuantity || item.quantity}</td>
-              <td className="text-center border p-2">{formatDate(item.date)}</td>
+              <td className={`text-center border border-gray-600 text-white p-2 ${!item.stockQuantity && "text-red-500"}`}>
+                {item.stockQuantity || item.quantity || "0"}
+              </td>
+              <td className="text-center border border-gray-600 text-white p-2">{formatDate(item.date)}</td>
+              {user.role === "admin" && (
+                <td className=" text-center border-gray-600 text-white border p-2">
+                  <button onClick={() => handleDeleteProduct(item._id)} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
+                    Delete
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

@@ -26,7 +26,7 @@ export default function App() {
         {user?.email ? (
           <div>
             <Navbar />
-            <div className="mt-4">
+            <div className="pt-4 bg-gray-700 min-h-screen">
               <Routes>
                 {/* Private Routes */}
                 <Route

@@ -10,19 +10,55 @@ export const StockProvider = ({ children }) => {
   const [stockIn, setStockIn] = useState([]);
   const [stockOut, setStockOut] = useState([]);
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [addProductVisible, setAddProductVisible] = useState(false);
   const [sTUVisible, setSTUVisible] = useState(false);
+  const userJSON = localStorage.getItem("user");
+  const user = JSON.parse(userJSON);
+  const handleUserLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-  const handleAddProduct = (product) => {
-    console.log("product", JSON.stringify(product, null, 2));
     axiosInstance
-      .post("/product/add", product)
+      .post("/user", { email, password })
       .then((res) => {
-        setProducts((pre) => [res.data.product, ...pre]);
+        if (res.data.success) {
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+          window.location.href = "/";
+        } else {
+          localStorage.clear();
+        }
+      })
+      .catch((error) => {
+        console.error("Login error: ", error);
+        localStorage.clear();
+      });
+  };
+
+  const handleAddProduct = (e) => {
+    console.log(e);
+    // e.preventDefault();
+    // const form = e.target;
+    // const formData = new FormData(form);
+
+    // const productData = {
+    //   name: formData.get("name"),
+    //   stockQuantity: formData.get("stockQuantity"),
+    // };
+    // const imageFile = formData.get("image");
+    // if (imageFile) {
+    //   productData.image = imageFile;
+    // }
+
+    axiosInstance
+      .post("/product/add", e)
+      .then((res) => {
+        setProducts((prev) => [res.data.product, ...prev]);
         setAddProductVisible(false);
       })
       .catch((err) => {
-        console.log({ err });
+        console.error("Error adding product:", err);
       });
   };
 
@@ -86,11 +122,18 @@ export const StockProvider = ({ children }) => {
         console.log("res.data", JSON.stringify(res.data, null, 2));
         if (res.data.success) {
           setProducts(res.data.products);
+          setAllProducts(res.data.products);
         }
       })
       .catch((error) => {
         console.log({ error });
       });
+  };
+
+  const handleSearchProduct = (text) => {
+    console.log(text);
+    const result = allProducts.filter((c) => c?.name?.toLowerCase().includes(text?.toLowerCase()));
+    setProducts(result);
   };
   const getHistories = () => {
     axiosInstance
@@ -111,6 +154,7 @@ export const StockProvider = ({ children }) => {
     getProducts();
     getHistories();
     return () => {
+      setAllProducts([]);
       setProducts([]);
       setStockIn([]);
       setStockOut([]);
@@ -120,6 +164,8 @@ export const StockProvider = ({ children }) => {
   return (
     <StockContext.Provider
       value={{
+        user,
+        handleUserLogin,
         addProductVisible,
         setAddProductVisible,
         stockIn,
@@ -130,6 +176,9 @@ export const StockProvider = ({ children }) => {
         setSTUVisible,
         sTUVisible,
         handleDeleteHistory,
+        allProducts,
+        setAllProducts,
+        handleSearchProduct,
       }}
     >
       {children}

@@ -2,7 +2,7 @@ import { useStock } from "../context/StockContext";
 import { formatDate } from "../constant/commonFunction";
 
 export default function StockOut() {
-  const { stockOut, handleDeleteHistory } = useStock();
+  const { stockOut, handleDeleteHistory, user } = useStock();
 
   return (
     <div className="container mx-auto p-4">
@@ -10,23 +10,25 @@ export default function StockOut() {
       <table className="w-full border">
         <thead>
           <tr className="bg-gray-100">
-            <th className="border p-2">Product</th>
-            <th className="border p-2">Quantity</th>
-            <th className="border p-2">Date</th>
-            <th className="border p-2">Actions</th>
+            <th className=" text-center border p-2">Product</th>
+            <th className=" text-center border p-2">Quantity</th>
+            <th className=" text-center border p-2">Date</th>
+            {user.role === "admin" && <th className=" text-center border p-2">Actions</th>}
           </tr>
         </thead>
         <tbody>
           {stockOut.map((stock) => (
             <tr key={stock._id}>
               <td className="border p-2">{stock.name}</td>
-              <td className="border p-2">{stock.stockQuantity}</td>
-              <td className="border p-2">{formatDate(stock.date)}</td>
-              <td className="border p-2">
-                <button onClick={() => handleDeleteHistory(stock)} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
-                  Delete
-                </button>
-              </td>
+              <td className=" text-center border p-2">{stock.stockQuantity}</td>
+              <td className=" text-center border p-2">{formatDate(stock.date)}</td>
+              {user.role === "admin" && (
+                <td className=" text-center border p-2">
+                  <button onClick={() => handleDeleteHistory(stock)} className="px-4 py-1 bg-red-500 text-white rounded mx-1">
+                    Delete
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

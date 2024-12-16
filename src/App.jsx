@@ -1,51 +1,71 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import StockIn from "./pages/StockIn";
 import StockOut from "./pages/StockOut";
 import { StockProvider } from "./context/StockContext";
 import LoginPage from "./pages/LoginPage";
-import { useState } from "react";
-import axios from "axios";
+
+const userJSON = localStorage.getItem("user");
+const user = JSON.parse(userJSON);
+
+console.log("user", JSON.stringify(user, null, 2));
+
+function PrivateRoute({ children }) {
+  if (!user?.email) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+}
 
 export default function App() {
-  const [isAuthenticate, setIsAuthenticate] = useState(false);
-
-  const handleUserLogin = (e) => {
-    e.preventDefault();
-    console.log(e.target.email.value);
-    axios
-      .get("https://stock-management-server-khaki.vercel.app/products")
-      .then((res) => {
-        if (res.data.success) {
-          setIsAuthenticate(false);
-        }
-      })
-      .catch((error) => {
-        console.log({ error });
-      });
-  };
-
   return (
-    <StockProvider>
-      <Router>
-        {isAuthenticate ? (
-          <Routes>
-            <Route path="/" element={<LoginPage handleUserLogin={handleUserLogin} />} />
-          </Routes>
-        ) : (
+    <BrowserRouter>
+      <StockProvider>
+        {user?.email ? (
           <div>
             <Navbar />
             <div className="mt-4">
               <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/stock-in" element={<StockIn />} />
-                <Route path="/stock-out" element={<StockOut />} />
+                {/* Private Routes */}
+                <Route
+                  path="/"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/stock-in"
+                  element={
+                    <PrivateRoute>
+                      <StockIn />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/stock-out"
+                  element={
+                    <PrivateRoute>
+                      <StockOut />
+                    </PrivateRoute>
+                  }
+                />
+                {/* Redirect or catch-all route */}
+                <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
           </div>
+        ) : (
+          <Routes>
+            {/* Routes for unauthenticated users */}
+            <Route path="/" element={<LoginPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
         )}
-      </Router>
-    </StockProvider>
+      </StockProvider>
+    </BrowserRouter>
   );
 }

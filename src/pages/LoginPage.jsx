@@ -1,20 +1,12 @@
 import { useState } from "react";
+import { useStock } from "../context/StockContext";
 
-const LoginPage = ({ handleUserLogin }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     setIsSubmitting(true);
-
-  //     // Simulate a network request (e.g., authentication)
-  //     setTimeout(() => {
-  //       alert("Logged In");
-  //       setIsSubmitting(false);
-  //     }, 2000);
-  //   };
+  const [showPassword, setShowPassword] = useState(false);
+  const { handleUserLogin } = useStock();
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-teal-500">
@@ -41,18 +33,27 @@ const LoginPage = ({ handleUserLogin }) => {
             <label className="block text-sm font-medium text-gray-700" htmlFor="password">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="********"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="********"
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
-
+          {/* 
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <input type="checkbox" id="remember" className="mr-2 leading-tight" />
@@ -63,7 +64,7 @@ const LoginPage = ({ handleUserLogin }) => {
             <a href="#" className="text-sm text-blue-500 hover:text-blue-700 transition duration-200">
               Forgot Password?
             </a>
-          </div>
+          </div> */}
 
           <button
             type="submit"
@@ -76,12 +77,12 @@ const LoginPage = ({ handleUserLogin }) => {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-600">
+        {/* <div className="mt-6 text-center text-sm text-gray-600">
           Don&apos;t have an account?{" "}
           <a href="#" className="text-blue-500 hover:text-blue-700 transition duration-200">
             Sign Up
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ export default function StockOut() {
 
   return (
     <div className="container mx-auto p-4 bg-gray-700 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6 text-white">Stock Out</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white">Stock Out</h1>
 
       {/* Confirm Delete Modal */}
       {confirmDelete && <ConfirmDeleteModal onClick={() => handleDeleteHistory(confirmDelete)} onCancel={() => setConfirmDelete(null)} />}
@@ -29,7 +29,7 @@ export default function StockOut() {
           <tbody>
             {stockOut.length > 0 ? (
               stockOut.map((stock, index) => (
-                <tr key={stock._id} className={`hover:bg-gray-700 transition-colors ${index % 2 === 0 ? "bg-gray-700" : "bg-gray-700"}`}>
+                <tr key={stock._id} className={`hover:bg-gray-800 transition-colors bg-gray-700`}>
                   <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">{index + 1}</td>
                   <td className="border border-gray-600 text-white p-3 text-sm md:text-base">{stock.name}</td>
                   <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">{stock.stockQuantity}</td>

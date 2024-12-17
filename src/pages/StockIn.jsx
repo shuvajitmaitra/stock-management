@@ -11,25 +11,23 @@ export default function StockIn() {
     <div className="container mx-auto p-4 bg-gray-700 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 text-white">Stock In</h1>
 
-      {/* Confirm Delete Modal */}
       {confirmDelete && <ConfirmDeleteModal onClick={() => handleDeleteHistory(confirmDelete)} onCancel={() => setConfirmDelete(null)} />}
 
-      {/* Responsive Table Container */}
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-gray-800 rounded overflow-hidden">
+        <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
           <thead>
             <tr className="bg-gray-600">
               <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Serial</th>
-              <th className="border p-2 text-center border-gray-600 text-white text-sm md:text-base">Product</th>
-              <th className="border p-2 text-center border-gray-600 text-white text-sm md:text-base">Quantity</th>
-              <th className="border p-2 text-center border-gray-600 text-white text-sm md:text-base">Date</th>
-              {user.role === "admin" && <th className="border p-2 text-center border-gray-600 text-white text-sm md:text-base">Actions</th>}
+              <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Product</th>
+              <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Quantity</th>
+              <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Date</th>
+              {user.role === "admin" && <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Actions</th>}
             </tr>
           </thead>
           <tbody>
             {stockIn.length > 0 ? (
               stockIn.map((stock, index) => (
-                <tr key={stock._id} className={`hover:bg-gray-700 transition-colors ${index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"}`}>
+                <tr key={stock._id} className={`hover:bg-gray-800 transition-colors bg-gray-700`}>
                   <td className="border text-center border-gray-600 text-white p-2 md:text-base">{index + 1}</td>
                   <td className="border border-gray-600 text-white p-2 md:text-base">{stock.name}</td>
                   <td className="border border-gray-600 text-white p-2 md:text-base">{stock.stockQuantity}</td>

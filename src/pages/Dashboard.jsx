@@ -59,20 +59,20 @@ export default function Dashboard() {
 
       {/* Responsive Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full rounded-lg overflow-hidden">
+        <table className="min-w-full bg-gray-800  rounded-lg overflow-hidden">
           <thead>
             <tr className="bg-gray-600">
-              <th className="text-center text-white border border-gray-600 p-2 text-sm">Serial</th>
-              <th className="text-center text-white border border-gray-600 p-2 text-sm">Product Name</th>
-              <th className="text-center text-white border border-gray-600 p-2 text-sm">Product Image</th>
-              <th className="text-center text-white border border-gray-600 p-2 text-sm">Quantity</th>
-              <th className="text-center text-white border border-gray-600 p-2 text-sm">Last Update</th>
-              {user.role === "admin" && <th className="text-center text-white border border-gray-600 p-2 text-sm">Action</th>}
+              <th className="text-center p-3 text-white border border-gray-600 p-2 text-sm">Serial</th>
+              <th className="text-center p-3 text-white border border-gray-600 p-2 text-sm">Product Name</th>
+              <th className="text-center p-3 text-white border border-gray-600 p-2 text-sm">Product Image</th>
+              <th className="text-center p-3 text-white border border-gray-600 p-2 text-sm">Quantity</th>
+              <th className="text-center p-3 text-white border border-gray-600 p-2 text-sm">Last Update</th>
+              {user.role === "admin" && <th className="text-center p-3 text-white border border-gray-600 p-2 text-sm">Action</th>}
             </tr>
           </thead>
           <tbody>
             {products.map((item, index) => (
-              <tr key={item._id} className="hover:bg-gray-700 transition-colors">
+              <tr key={item._id} className={`hover:bg-gray-800 transition-colors bg-gray-700`}>
                 <td className="text-center border border-gray-600 text-white p-2 text-sm">{index + 1}</td>
                 <td className="border border-gray-600 text-white p-2 text-sm">{item.name || item.product}</td>
                 <td className="border border-gray-600 text-white p-2 text-sm">

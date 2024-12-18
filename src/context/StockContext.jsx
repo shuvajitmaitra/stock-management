@@ -138,7 +138,6 @@ export const StockProvider = ({ children }) => {
       .get("/histories")
       .then((res) => {
         if (res.data.success) {
-          console.log("res.data", JSON.stringify(res.data, null, 2));
           setStockIn(res.data.stockIn);
           setStockOut(res.data.stockOut);
         }

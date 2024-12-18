@@ -89,7 +89,7 @@ const LoginPage = () => {
           </div>
         </div>
       ) : (
-        <SignUpCom />
+        <SignUpCom setLogin={setLogin} />
       )}
     </>
   );

@@ -1,6 +1,8 @@
+import axios from "axios";
 import { useState } from "react";
+import axiosInstance from "../constant/axios";
 
-export default function SignUpCom() {
+export default function SignUpCom({ setLogin }) {
   const [signUp, setSignUp] = useState({
     fullName: "",
     email: "",
@@ -15,6 +17,18 @@ export default function SignUpCom() {
       alert("Passwords do not match!");
       return;
     }
+
+    axiosInstance
+      .post("create-user", signUp)
+      .then((res) => {
+        console.log("res.data", JSON.stringify(res.data, null, 2));
+        if (res.data.success) {
+          setLogin(true);
+        }
+      })
+      .catch((error) => {
+        console.log("error", JSON.stringify(error, null, 2));
+      });
   };
 
   return (

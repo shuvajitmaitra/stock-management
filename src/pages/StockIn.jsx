@@ -6,24 +6,24 @@ import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 export default function StockIn() {
   const { stockIn, handleDeleteHistory, user } = useStock();
   const [confirmDelete, setConfirmDelete] = useState(null);
-  // useEffect(() => {
-  //   // define a custom handler function
-  //   // for the contextmenu event
-  //   const handleContextMenu = (e) => {
-  //     // prevent the right-click menu from appearing
-  //     e.preventDefault();
-  //   };
+  useEffect(() => {
+    // define a custom handler function
+    // for the contextmenu event
+    const handleContextMenu = (e) => {
+      // prevent the right-click menu from appearing
+      e.preventDefault();
+    };
 
-  //   // attach the event listener to
-  //   // the document object
-  //   document.addEventListener("contextmenu", handleContextMenu);
+    // attach the event listener to
+    // the document object
+    document.addEventListener("contextmenu", handleContextMenu);
 
-  //   // clean up the event listener when
-  //   // the component unmounts
-  //   return () => {
-  //     document.removeEventListener("contextmenu", handleContextMenu);
-  //   };
-  // }, []);
+    // clean up the event listener when
+    // the component unmounts
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
   return (
     <div className="container mx-auto p-4 bg-gray-700 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 text-white">Stock In</h1>

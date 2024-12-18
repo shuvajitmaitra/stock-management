@@ -7,16 +7,16 @@ export default function StockOut() {
   const { stockOut, handleDeleteHistory, user } = useStock();
   const [confirmDelete, setConfirmDelete] = useState(null);
 
-  // useEffect(() => {
-  //   const handleContextMenu = (e) => {
-  //     e.preventDefault();
-  //   };
-  //   document.addEventListener("contextmenu", handleContextMenu);
+  useEffect(() => {
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+    document.addEventListener("contextmenu", handleContextMenu);
 
-  //   return () => {
-  //     document.removeEventListener("contextmenu", handleContextMenu);
-  //   };
-  // }, []);
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
   return (
     <div className="container mx-auto p-4 bg-gray-700 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 text-white">Stock Out</h1>

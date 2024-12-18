@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const production = true;
+const production = false;
 
 const axiosInstance = axios.create({
   baseURL: production ? "https://stock-management-server-khaki.vercel.app" : "http://localhost:5001",

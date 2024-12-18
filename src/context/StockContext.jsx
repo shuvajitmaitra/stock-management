@@ -64,7 +64,7 @@ export const StockProvider = ({ children }) => {
 
   const handleStockUpdate = (product) => {
     axiosInstance
-      .patch(`/product/update/${product._id}`, { ...product, date: new Date() })
+      .patch(`/product/update/${product._id}`, { ...product, date: new Date(), userEmail: user.email })
       .then((res) => {
         if (res.data.history.type === "in") {
           setStockIn((pre) => [res.data.history, ...pre]);
@@ -138,7 +138,7 @@ export const StockProvider = ({ children }) => {
       .get("/histories")
       .then((res) => {
         if (res.data.success) {
-          // console.log("res.data", JSON.stringify(res.data, null, 2));
+          console.log("res.data", JSON.stringify(res.data, null, 2));
           setStockIn(res.data.stockIn);
           setStockOut(res.data.stockOut);
         }

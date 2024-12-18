@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStock } from "../context/StockContext";
 import Modal from "../components/Modal";
 import AddProductsModal from "../components/AddProductsModal";
@@ -21,6 +21,24 @@ export default function Dashboard() {
   const handleImageClick = (imageUrl) => {
     setPreviewImage(imageUrl);
   };
+  // useEffect(() => {
+  //   // define a custom handler function
+  //   // for the contextmenu event
+  //   const handleContextMenu = (e) => {
+  //     // prevent the right-click menu from appearing
+  //     e.preventDefault();
+  //   };
+
+  //   // attach the event listener to
+  //   // the document object
+  //   document.addEventListener("contextmenu", handleContextMenu);
+
+  //   // clean up the event listener when
+  //   // the component unmounts
+  //   return () => {
+  //     document.removeEventListener("contextmenu", handleContextMenu);
+  //   };
+  // }, []);
 
   return (
     <div className="container mx-auto p-4 bg-gray-700 min-h-screen">
@@ -29,14 +47,16 @@ export default function Dashboard() {
       {/* Action Buttons and Search Field */}
       <div className="flex flex-col md:flex-row gap-4 mb-6 items-start md:items-center">
         <div className="flex flex-col sm:flex-row gap-4 w-full">
-          <button
-            onClick={() => {
-              setAddProductVisible(true);
-            }}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-          >
-            Add Product
-          </button>
+          {user.role === "admin" && (
+            <button
+              onClick={() => {
+                setAddProductVisible(true);
+              }}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            >
+              Add Product
+            </button>
+          )}
           <button
             onClick={() => {
               setSTUVisible(true);

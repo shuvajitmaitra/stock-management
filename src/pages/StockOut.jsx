@@ -1,12 +1,22 @@
 import { useStock } from "../context/StockContext";
 import { formatDate } from "../constant/commonFunction";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function StockOut() {
   const { stockOut, handleDeleteHistory, user } = useStock();
   const [confirmDelete, setConfirmDelete] = useState(null);
 
+  // useEffect(() => {
+  //   const handleContextMenu = (e) => {
+  //     e.preventDefault();
+  //   };
+  //   document.addEventListener("contextmenu", handleContextMenu);
+
+  //   return () => {
+  //     document.removeEventListener("contextmenu", handleContextMenu);
+  //   };
+  // }, []);
   return (
     <div className="container mx-auto p-4 bg-gray-700 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 text-white">Stock Out</h1>
@@ -23,6 +33,7 @@ export default function StockOut() {
               <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Product</th>
               <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Quantity</th>
               <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Date</th>
+              <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Updated By</th>
               {user.role === "admin" && <th className="border p-3 text-center border-gray-600 text-white text-sm md:text-base">Actions</th>}
             </tr>
           </thead>
@@ -34,6 +45,7 @@ export default function StockOut() {
                   <td className="border border-gray-600 text-white p-3 text-sm md:text-base">{stock.name}</td>
                   <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">{stock.stockQuantity}</td>
                   <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">{formatDate(stock.date)}</td>
+                  <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">{stock.user.fullName || "N/A"}</td>
                   {user.role === "admin" && (
                     <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">
                       <button

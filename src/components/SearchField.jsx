@@ -3,9 +3,9 @@ import { useStock } from "../context/StockContext";
 export default function SearchField() {
   const { handleSearchProduct } = useStock();
   return (
-    <div className="relative w-max rounded-lg">
+    <div className="relative w-full rounded-lg">
       <input
-        className="peer rounded-lg border border-sky-600 bg-transparent px-4 py-2 text-sky-600 focus:outline-none"
+        className=" w-full peer rounded-lg border border-sky-600 bg-transparent px-4 py-2 text-sky-600 focus:outline-none"
         type="text"
         placeholder=""
         id="navigate_ui_input_33"

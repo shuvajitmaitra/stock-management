@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useStock } from "../context/StockContext";
-import axios from "axios"; // You'll need axios or another HTTP client to send data to your backend
+import axios from "axios";
 
 export default function AddProductsModal() {
-  const [formData, setFormData] = useState({ name: "", stockQuantity: "", image: "" });
+  const [formData, setFormData] = useState({ name: "", stockQuantity: 0, image: "" });
   const { setAddProductVisible, handleAddProduct } = useStock();
 
   const [uploading, setUploading] = useState(false);
@@ -61,7 +61,7 @@ export default function AddProductsModal() {
             />
           </div>
 
-          <div>
+          {/* <div>
             <input
               type="number"
               name="stockQuantity"
@@ -71,7 +71,7 @@ export default function AddProductsModal() {
               onChange={(e) => setFormData((prev) => ({ ...prev, stockQuantity: parseInt(e.target.value) }))}
               required
             />
-          </div>
+          </div> */}
           {uploading ? (
             <div className="w-10 h-10 flex gap-2 items-center justify-center">
               <div className="w-2 h-5 animate-[ping_1.4s_linear_infinite] bg-sky-600"></div>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function StockOut() {
   const { stockOut, handleDeleteHistory, user } = useStock();
   const [confirmDelete, setConfirmDelete] = useState(null);
+  console.log("stockOut", JSON.stringify(stockOut, null, 2));
 
   useEffect(() => {
     const handleContextMenu = (e) => {

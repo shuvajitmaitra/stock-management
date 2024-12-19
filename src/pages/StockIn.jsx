@@ -6,6 +6,7 @@ import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 export default function StockIn() {
   const { stockIn, handleDeleteHistory, user } = useStock();
   const [confirmDelete, setConfirmDelete] = useState(null);
+  console.log("stockIn", JSON.stringify(stockIn, null, 2));
   useEffect(() => {
     // define a custom handler function
     // for the contextmenu event

@@ -48,7 +48,7 @@ export default function AddProductsModal() {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
       <div className="bg-gray-800 p-6 rounded-xl shadow-lg max-w-md w-full">
         <h2 className="text-2xl font-bold text-white mb-6 text-center">Add Your Product</h2>
-        <form className="space-y-4">
+        <div className="space-y-4">
           <div>
             <input
               type="text"
@@ -99,7 +99,6 @@ export default function AddProductsModal() {
           <div className="flex justify-between items-center">
             <button
               onClick={() => handleAddProduct(formData)}
-              type="submit"
               className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
             >
               {"Submit"}
@@ -112,7 +111,7 @@ export default function AddProductsModal() {
               Cancel
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

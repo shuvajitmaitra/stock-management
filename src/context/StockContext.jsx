@@ -38,7 +38,6 @@ export const StockProvider = ({ children }) => {
 
   const handleAddProduct = (e) => {
     // console.log(e);
-    // e.preventDefault();
     // const form = e.target;
     // const formData = new FormData(form);
 

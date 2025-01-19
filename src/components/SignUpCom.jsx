@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import axiosInstance from "../constant/axios";
 
@@ -19,7 +18,7 @@ export default function SignUpCom({ setLogin }) {
     }
 
     axiosInstance
-      .post("create-user", signUp)
+      .post("/user/create-user", signUp)
       .then((res) => {
         console.log("res.data", JSON.stringify(res.data, null, 2));
         if (res.data.success) {

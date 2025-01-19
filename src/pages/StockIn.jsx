@@ -51,7 +51,9 @@ export default function StockIn() {
                   <td className="border border-gray-600 text-white p-2 md:text-base">{stock.name}</td>
                   <td className="border border-gray-600 text-white p-2 md:text-base">{stock.stockQuantity}</td>
                   <td className="border border-gray-600 text-white p-2 md:text-base">{formatDate(stock.date)}</td>
-                  <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">{stock?.user?.name || "N/A"}</td>
+                  <td className="border border-gray-600 text-white p-3 text-center text-sm md:text-base">
+                    {stock?.user?.fullName || "N/A"}
+                  </td>
                   {user.role === "admin" && (
                     <td className="border border-gray-600 text-white p-2 md:text-base">
                       <button

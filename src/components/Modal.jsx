@@ -3,9 +3,8 @@ import Select from "react-select";
 import { useStock } from "../context/StockContext";
 
 export default function Modal() {
-  const [formData, setFormData] = useState({ type: "out", stockQuantity: 0 });
-
   const { products, handleStockUpdate, setSTUVisible, user } = useStock();
+  const [formData, setFormData] = useState({ type: user.role !== "admin" ? "out" : "", stockQuantity: 0 });
 
   const handleChange = (e) => {
     setFormData({ ...formData, stockQuantity: parseInt(e?.target?.value) });
@@ -108,6 +107,7 @@ export default function Modal() {
                 isSearchable
                 placeholder="Select stock in or stock out"
                 styles={customStyles}
+                required
               />
             </div>
           )}

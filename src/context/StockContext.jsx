@@ -21,7 +21,7 @@ export const StockProvider = ({ children }) => {
     const password = e.target.password.value;
 
     axiosInstance
-      .post("/user", { email, password })
+      .post("/user/login", { email, password })
       .then((res) => {
         if (res.data.success) {
           localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -51,7 +51,7 @@ export const StockProvider = ({ children }) => {
     // }
 
     axiosInstance
-      .post("/product/add", e)
+      .post("/product/product-add", e)
       .then((res) => {
         setProducts((prev) => [res.data.product, ...prev]);
         setAddProductVisible(false);
@@ -63,7 +63,7 @@ export const StockProvider = ({ children }) => {
 
   const handleStockUpdate = (product) => {
     axiosInstance
-      .patch(`/product/update/${product._id}`, { ...product, date: new Date(), userEmail: user.email })
+      .patch(`/product/product-update/${product._id}`, { ...product, date: new Date(), userEmail: user.email })
       .then((res) => {
         if (res.data.history.type === "in") {
           setStockIn((pre) => [res.data.history, ...pre]);
@@ -81,7 +81,7 @@ export const StockProvider = ({ children }) => {
   };
   const handleDeleteHistory = (stock) => {
     axiosInstance
-      .delete(`/history/delete/${stock._id}`)
+      .delete(`/history/history-delete/${stock._id}`)
       .then((res) => {
         const itemIndex = products.findIndex((item) => item._id === stock.productId);
 
@@ -115,7 +115,7 @@ export const StockProvider = ({ children }) => {
 
   const getProducts = () => {
     axiosInstance
-      .get("/products")
+      .get("/product/all-products")
       .then((res) => {
         // console.log("res.data", JSON.stringify(res.data, null, 2));
         if (res.data.success) {
@@ -134,7 +134,7 @@ export const StockProvider = ({ children }) => {
   };
   const getHistories = () => {
     axiosInstance
-      .get("/histories")
+      .get("/history/all-histories")
       .then((res) => {
         if (res.data.success) {
           setStockIn(res.data.stockIn);
@@ -147,7 +147,7 @@ export const StockProvider = ({ children }) => {
   };
   const handleDeleteProduct = (id) => {
     axiosInstance
-      .delete(`/product/delete/${id}`)
+      .delete(`/product/product-delete/${id}`)
       .then((res) => {
         // console.log("res.data", JSON.stringify(res.data, null, 2));
         if (res.data.success) {

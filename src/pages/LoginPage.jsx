@@ -80,12 +80,12 @@ const LoginPage = () => {
               </button>
             </form>
 
-            <div className="mt-6 text-center text-sm text-gray-600">
+            {/* <div className="mt-6 text-center text-sm text-gray-600">
               Don&apos;t have an account?{" "}
               <a onClick={() => setLogin(false)} href="#" className="text-blue-500 hover:text-blue-700 transition duration-200">
                 Sign Up
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (
